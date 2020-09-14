@@ -116,9 +116,9 @@ const AppleMusic = () => {
           </View>
 
           <Text style={styles.songTitleLarge}>{song.name}</Text>
-          <Text style={styles.songInfoText}>{`${song.artist} ⏤ ${
-            song.album
-          }`}</Text>
+          <Text
+            style={styles.songInfoText}
+          >{`${song.artist} ⏤ ${song.album}`}</Text>
         </AnimatedView>
       </AnimatedView>
     )

@@ -316,7 +316,7 @@ export default class BottomSheetBehavior extends React.Component<Props, State> {
   private panState = new Value(0)
   private tapState = new Value(0)
   private velocity = new Value(0)
-  private panMasterState = new Value(GestureState.END)
+  private panMasterState: Animated.Value<number> = new Value(GestureState.END)
   private masterVelocity = new Value(0)
   private isManuallySetValue: Animated.Value<number> = new Value(0)
   private manuallySetValue = new Value(0)
@@ -692,23 +692,18 @@ export default class BottomSheetBehavior extends React.Component<Props, State> {
       val: number
       ind: number
     }> = props.snapPoints
-      .map(
-        (
-          s: number | string,
-          i: number
-        ): {
-          val: number
-          ind: number
-        } => {
-          if (typeof s === 'number') {
-            return { val: s, ind: i }
-          } else if (typeof s === 'string') {
-            return { val: BottomSheetBehavior.renumber(s), ind: i }
-          }
-
-          throw new Error(`Invalid type for value ${s}: ${typeof s}`)
+      .map((s: number | string, i: number): {
+        val: number
+        ind: number
+      } => {
+        if (typeof s === 'number') {
+          return { val: s, ind: i }
+        } else if (typeof s === 'string') {
+          return { val: BottomSheetBehavior.renumber(s), ind: i }
         }
-      )
+
+        throw new Error(`Invalid type for value ${s}: ${typeof s}`)
+      })
       .sort(({ val: a }, { val: b }) => b - a)
     if (state && state.snapPoints) {
       state.snapPoints.forEach((s, i) =>
